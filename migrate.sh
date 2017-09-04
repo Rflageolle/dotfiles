@@ -18,7 +18,7 @@ for file in "$@"; do
         rm "$HOME/$file"
         echo "Moving $file back to home directory"
         mv "$dir/$file" "$HOME/$file"
-        git rm -rf "$file"
+        git add "$file"
         Removed=("${Removed[@]}" "$file")
     else
         echo "Migrating $file to $dir"
@@ -28,5 +28,6 @@ for file in "$@"; do
         git add "$file"
         Added=("${Added[@]}" "$file")
     fi
-    git commit -m "Added (${Added[@]}) and Removed (${Removed[@]})"
 done
+
+git commit -m "Added (${Added[@]}) and Removed (${Removed[@]})"
