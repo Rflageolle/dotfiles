@@ -24,3 +24,8 @@ while read -r -d '' file; do
     echo "Creating symlink to $file in home directory."
     ln -s "$dir/$file" "$HOME/$file"
 done < <(find . -name ".*" ! -name "." ! -name ".git" ! -name ".DS_Store" -print0 | sed "s/\.\///g")
+
+
+# Now that this is a one time setup script
+# add brew.sh and source it. for brew installed programs
+# see https://github.com/mathiasbynens/dotfiles
