@@ -30,4 +30,13 @@ for file in "$@"; do
     fi
 done
 
-git commit -m "Added (${Added[@]}) and Removed (${Removed[@]})"
+# git commit -m "Added (${Added[@]}) and Removed (${Removed[@]})"
+message="Migrate:"
+if [[ ${#Added[@]} -gt 0 ]]; then
+    message="$message Added: ${Added[@]}"
+fi
+if [[ ${#Removed[@]} -gt 0 ]]; then
+    message="$message Removed: ${Removed[@]}"
+fi
+
+git commit -m "$message"
