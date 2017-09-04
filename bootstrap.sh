@@ -2,8 +2,8 @@
 
 ########## Variables
 
-dir=~/.dotfiles                    # dotfiles directory
-olddir=~/.dotfiles_old             # old dotfiles backup directory
+dir="$HOME/.dotfiles"                    # dotfiles directory
+olddir="$HOME/.dotfiles_old"             # old dotfiles backup directory
 
 ##########
 
@@ -20,7 +20,7 @@ echo "...done"
 # move any existing dotfiles in homedir to dotfiles_old directory, then create symlinks
 while read -r -d '' file; do
     echo "Moving any existing dotfiles from ~ to $olddir"
-    mv "$HOME/$file" "$HOME/dotfiles_old/"
+    mv "$HOME/$file" "$olddir"
     echo "Creating symlink to $file in home directory."
     ln -s "$dir/$file" "$HOME/$file"
-done < <(find . -name ".*" ! -name ".git" ! -name "." -print0)
+done < <(find . -name ".*" ! -name ".git" ! -name "." ! -name ".DS_Store" -print0 | sed "s/\.\///g")
