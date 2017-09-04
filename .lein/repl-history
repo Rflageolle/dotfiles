@@ -1,0 +1,66 @@
+eixt
+exit
+(exit)
+(defn my-pas-tri-row
+  "Gets a list representing a row in Pascal's Triangle"
+  [n]
+  (cond
+    (< n 0) '()
+    (= n 0) '(1)
+    :else
+    (let [padded (cons 0 (conj 0 (vec (my-pas-tri-row (- n 1)))))]
+      (println padded)
+      (reduce + padded)
+    )
+  )
+)
+(my-pas-tri-row 5)
+(defn my-pas-tri-row
+  "Gets a list representing a row in Pascal's Triangle"
+  [n]
+  (cond
+    (< n 0) nil
+    (= n 0) '(1)
+    :else
+    (let [padded (cons 0 (seq (conj 0 (vec (my-pas-tri-row (- n 1))))))]
+      (println padded)
+      (reduce + padded)
+    )
+  )
+)
+(my-pas-tri-row 5)
+(defn my-pas-tri-row
+  "Gets a list representing a row in Pascal's Triangle"
+  [n]
+  (cond
+    (< n 0) nil
+    (= n 0) '(1)
+    :else
+    (let [padded (cons 0 (seq (conj (vec (my-pas-tri-row (- n 1))) 0 )))]
+      (println padded)
+      (reduce + padded)
+    )
+  )
+)
+(my-pas-tri-row 5)
+(defn my-pas-tri-row
+  "Gets a list representing a row in Pascal's Triangle"
+  [n]
+  (cond
+    (< n 0) nil
+    (= n 0) '(1)
+    :else
+    (let [padded (cons 0 (seq (conj (vec (my-pas-tri-row (- n 1))) 0 )))]
+      (println padded)
+      (reduce (fn [x y] (+ x y)) padded)
+    )
+  )
+)
+(my-pas-tri-row 5)
+(exit)
+(load-file "project3/src/project3/clore.clj)
+)
+")
+(load-file "project3/src/project3/clore.clj")
+(load-file "project3/src/project3/core.clj")
+(exit)
