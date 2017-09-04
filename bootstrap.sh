@@ -23,4 +23,4 @@ while read -r -d '' file; do
     mv "$HOME/$file" "$olddir"
     echo "Creating symlink to $file in home directory."
     ln -s "$dir/$file" "$HOME/$file"
-done < <(find . -name ".*" ! -name ".git" ! -name "." ! -name ".DS_Store" -print0 | sed "s/\.\///g")
+done < <(find . -name ".*" ! -name "." ! -name ".git" ! -name ".DS_Store" -print0 | sed "s/\.\///g")
