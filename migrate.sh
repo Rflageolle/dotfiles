@@ -33,10 +33,10 @@ done
 # git commit -m "Added (${Added[@]}) and Removed (${Removed[@]})"
 message="Migrate:"
 if [[ ${#Added[@]} -gt 0 ]]; then
-    message="$message Added: ${Added[@]}"
+    message="$message Added: ${Added[*]}"
 fi
 if [[ ${#Removed[@]} -gt 0 ]]; then
-    message="$message Removed: ${Removed[@]}"
+    message="$message Removed: ${Removed[*]}"
 fi
 
 git commit -m "$message"
