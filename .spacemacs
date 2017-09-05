@@ -53,7 +53,7 @@ values."
      ;; syntax-checking
      ;; version-control
      themes-megapack
-     ycmd
+     ;; ycmd
      )
    ;; List of additional packages that will be installed without being
    ;; wrapped in a layer. If you need some configuration for these
@@ -317,9 +317,9 @@ explicitly specified that a variable should be set before a package is loaded,
 you should place your code here."
 
   (setq powerline-default-separator 'slant
-        ycmd-server-command (list "python" (file-truename "~/dev/ycmd/ycmd"))
-        ycmd-extra-conf-whitelist '("~/Development/")
-        ycmd-force-semantic-completion t
+        ;; ycmd-server-command (list "python" (file-truename "~/dev/ycmd/ycmd"))
+        ;; ycmd-extra-conf-whitelist '("~/Development/")
+        ;; ycmd-force-semantic-completion t
   )
 )
 
