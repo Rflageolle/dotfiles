@@ -46,7 +46,7 @@ values."
      markdown
      org
      python
-     (spell-checking :variables spell-checking-enable-by-default nil)
+     (spell-checking :variables enable-flyspell-auto-completion t)
      ;; syntax-checking
      themes-megapack
      ;; version-control
