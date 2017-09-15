@@ -122,8 +122,8 @@ values."
    ;; `recents' `bookmarks' `projects' `agenda' `todos'."
    ;; List sizes may be nil, in which case
    ;; `spacemacs-buffer-startup-lists-length' takes effect.
-   dotspacemacs-startup-lists '((recents . 5)
-                                (projects . 7))
+   dotspacemacs-startup-lists '((recents . 7)
+                                (projects . 5))
    ;; True if the home buffer should respond to resize events.
    dotspacemacs-startup-buffer-responsive t
    ;; Default major mode of the scratch buffer (default `text-mode')
@@ -137,8 +137,8 @@ values."
    dotspacemacs-colorize-cursor-according-to-state t
    ;; Default font, or prioritized list of fonts. `powerline-scale' allows to
    ;; quickly tweak the mode-line size to make separators look not too crappy.
-   dotspacemacs-default-font '("Anonymous Pro"
    ;; dotspacemacs-default-font '("Source Code Pro"
+   dotspacemacs-default-font '("Anonymous Pro"
                                :size 13
                                :weight normal
                                :width normal
@@ -317,11 +317,8 @@ explicitly specified that a variable should be set before a package is loaded,
 you should place your code here."
 
   (setq powerline-default-separator 'slant
-        ;; ns-use-srgb-colorspace nil
         powerline-image-apple-rgb t
-        ;; ycmd-server-command (list "python" (file-truename "~/dev/ycmd/ycmd"))
-        ;; ycmd-extra-conf-whitelist '("~/Development/")
-        ;; ycmd-force-semantic-completion t
+        ;; ns-use-srgb-colorspace nil
   )
 )
 
