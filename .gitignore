@@ -9,4 +9,10 @@ Thumbs.db
 # Files that might appear on external disks
 .Spotlight-V100
 .Trashes
+
+#################
+# Repo specific #
+#################
+
+# This file churns as the leiningen repl gets used
 .lein/repl-history
