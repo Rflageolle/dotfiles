@@ -317,7 +317,8 @@ explicitly specified that a variable should be set before a package is loaded,
 you should place your code here."
 
   (setq powerline-default-separator 'slant
-        ns-use-srgb-colorspace nil
+        ;; ns-use-srgb-colorspace nil
+        powerline-image-apple-rgb t
         ;; ycmd-server-command (list "python" (file-truename "~/dev/ycmd/ycmd"))
         ;; ycmd-extra-conf-whitelist '("~/Development/")
         ;; ycmd-force-semantic-completion t
