@@ -17,13 +17,16 @@ echo "Changing to the $dir directory"
 cd $dir || exit
 echo "...done"
 
-# move any existing dotfiles in homedir to dotfiles_old directory, then create symlinks
+# move any existing dotfiles in homedir to dotfiles_old directory,
+# then create symlinks
 while read -r -d '' file; do
     echo "Moving any existing dotfiles from ~ to $olddir"
     mv "$HOME/$file" "$olddir"
     echo "Creating symlink to $file in home directory."
     ln -s "$dir/$file" "$HOME/$file"
-done < <(find . -name ".*" ! -name "." ! -name ".git" ! -name ".DS_Store" -print0 | sed "s/\.\///g")
+done < <(find . \( -path "./.git" -o -path "./old" \) -prune -o -name ".*" \
+              -not \( -name "." -o -name ".DS_Store" -o -name ".gitignore" \) \
+              -print0 | sed "s/\.\///g")
 
 
 # Now that this is a one time setup script

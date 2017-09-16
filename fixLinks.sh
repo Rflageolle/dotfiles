@@ -19,6 +19,8 @@ while read -r -d '' file; do
         echo "Fixing symlink to $file in home directory."
         ln -sf "$dir/$file" "$HOME/$file"
     fi
-done < <(find . -name ".*" ! -name "." ! -name ".git" ! -name ".DS_Store" -print0 | sed "s/\.\///g")
+done < <(find . \( -path "./.git" -o -path "./old" \) -prune -o -name ".*" \
+              -not \( -name "." -o -name ".DS_Store" -o -name ".gitignore" \) \
+              -print0 | sed "s/\.\///g")
 
 echo "...done"
