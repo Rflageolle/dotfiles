@@ -6,4 +6,4 @@
 	name = CupricWolf
 	email = marcello.s.nicoletti@gmail.com
 [core]
-	excludesfile = /Users/Marco/.gitignore
+	excludesfile = /Users/Marco/.gitignore_global
