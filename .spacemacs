@@ -42,7 +42,7 @@ This function should only modify configuration layer settings."
      git
      helm
      html
-     javascript
+     ;; javascript
      markdown
      org
      python
