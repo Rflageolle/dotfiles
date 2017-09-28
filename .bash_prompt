@@ -1,3 +1,5 @@
+#!/usr/bin/env bash
+
 RegularUserPart="\[\e[36m\]\u\[\e[0m\]"
 RootUserPart="\[\e[31;5m\]\u\[\e[0m\]"
 Between="\[\e[0m\]@\[\e[0m\]"
