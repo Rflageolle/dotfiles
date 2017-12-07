@@ -13,8 +13,21 @@ function mkcd()
 }
 export -f mkcd
 
-function school()
-{
-  cs "$HOME/Documents/School/Fall_17/$1"*
-}
-export -f school
+case $( uname -s ) in
+"darwin"|"Darwin" )
+    function school()
+    {
+      cs "$HOME/Documents/School/Fall_17/$1"*
+    }
+    export -f school
+
+    function dman()
+    {
+      open dash://manpages:"$*"
+    }
+    export -f dman
+    ;;
+* )
+    # Put other OS function here
+    ;;
+esac
