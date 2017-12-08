@@ -14,7 +14,7 @@ function mkcd()
 export -f mkcd
 
 case $( uname -s ) in
-"darwin"|"Darwin" )
+"Darwin"|"darwin" )
     function school()
     {
       cs "$HOME/Documents/School/Fall_17/$1"*
