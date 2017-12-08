@@ -13,7 +13,9 @@ case $( uname -s ) in
     export LSCOLORS=GxFxCxDxBxegedabagaced
     ;;
 * )
-    export LS_COLORS=GxFxCxDxBxegedabagaced
+    formats="di=36:ln=35:so=32:pi=33:ex=31:bd=34;46:cd=34;43:"
+    formats+="su=30;41:sg=30;46:tw=30;42:ow=30;43"
+    export LS_COLORS=$formats
     ;;
 esac
 
