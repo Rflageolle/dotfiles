@@ -19,7 +19,7 @@ case $( uname -s ) in
         # macOS
         function school()
         {
-          cs "$HOME/Documents/School/Fall_17/$1"*
+          cs "$HOME/Documents/School/Spring_18/$1"*
         }
         export -f school
 
