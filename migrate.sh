@@ -1,15 +1,15 @@
 #!/usr/bin/env bash
 
 # Migration tool for dotfiles.
-# Usage: ".~/migrate.sh .file" moves .file to ~/.dotfiles and installs a
-#   symlink into ~/. If .file is already in .dotfiles, removes it, replacing
-#   it over the symlink.
+# Usage: "./migrate.sh .file" moves .file to dotfiles_dir and installs a
+#   symlink into ~/. If .file is already in dotfiles_dir, this removes it
+#   from dotfiles_dir and replaces it over the symlink.
 
-dir="$HOME/.dotfiles/dotfiles"
+source "./definitions.sh"
 declare -a Removed
 declare -a Added
 
-cd "$dir" || exit
+cd "$dotfiles_dir" || exit
 
 for file in "$@"; do
     [[ $file =~ \..+ ]] || continue # Skip non-dot files TODO: Considder not
@@ -17,14 +17,14 @@ for file in "$@"; do
         echo "Removing symlink to $file from home directory."
         rm "$HOME/$file"
         echo "Moving $file back to home directory"
-        mv "$dir/$file" "$HOME/$file"
+        mv "$dotfiles_dir/$file" "$HOME/$file"
         git add "$file"
         Removed=("${Removed[@]}" "$file")
     else
-        echo "Migrating $file to $dir"
-        mv "$HOME/$file" "$dir/$file"
+        echo "Migrating $file to $dotfiles_dir"
+        mv "$HOME/$file" "$dotfiles_dir/$file"
         echo "Creating symlink to $file in home directory."
-        ln -s "$dir/$file" "$HOME/$file"
+        ln -s "$dotfiles_dir/$file" "$HOME/$file"
         git add "$file"
         Added=("${Added[@]}" "$file")
     fi
