@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-source "./definitions.sh"
+source "$HOME/.dotfiles/definitions.sh"
 
 echo "Changing to the $dotfiles_dir directory"
 cd $dotfiles_dir || exit

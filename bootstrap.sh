@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-source "./definitions.sh"
+source "$HOME/.dotfiles/definitions.sh"
 
 # create dotfiles_old in homedir
 echo "Creating $old_dotfiles_dir for backup of any existing dotfiles in ~"

@@ -5,7 +5,7 @@
 #   symlink into ~/. If .file is already in dotfiles_dir, this removes it
 #   from dotfiles_dir and replaces it over the symlink.
 
-source "./definitions.sh"
+source "$HOME/.dotfiles/definitions.sh"
 declare -a Removed
 declare -a Added
 
