@@ -5,14 +5,14 @@
 #   symlink into ~/. If .file is already in .dotfiles, removes it, replacing
 #   it over the symlink.
 
-dir="$HOME/.dotfiles"
+dir="$HOME/.dotfiles/dotfiles"
 declare -a Removed
 declare -a Added
 
 cd "$dir" || exit
 
 for file in "$@"; do
-    [[ $file =~ \..+ ]] || continue # Skip non-dot files
+    [[ $file =~ \..+ ]] || continue # Skip non-dot files TODO: Considder not
     if [ -f "$file" ] || [ -d "$file" ]; then
         echo "Removing symlink to $file from home directory."
         rm "$HOME/$file"

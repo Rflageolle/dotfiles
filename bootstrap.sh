@@ -2,7 +2,7 @@
 
 ########## Variables
 
-dir="$HOME/.dotfiles"                    # dotfiles directory
+dir="$HOME/.dotfiles/dotfiles"                    # dotfiles directory
 olddir="$HOME/.dotfiles_old"             # old dotfiles backup directory
 
 ##########
@@ -22,11 +22,10 @@ echo "...done"
 while read -r -d '' file; do
     echo "Moving any existing dotfiles from ~ to $olddir"
     mv "$HOME/$file" "$olddir"
+    file=$( basename "$file" )
     echo "Creating symlink to $file in home directory."
     ln -s "$dir/$file" "$HOME/$file"
-done < <(find . \( -path "./.git" -o -path "./old" \) -prune -o -name ".*" \
-              -not \( -name "." -o -name ".DS_Store" -o -name ".gitignore" \) \
-              -print0 | sed "s/\.\///g")
+done < <(find . -not \( -name "." -o -name ".DS_Store" \) -print0)
 
 
 # Now that this is a one time setup script
