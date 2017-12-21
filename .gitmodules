@@ -1,0 +1,6 @@
+[submodule "prezto"]
+	path = prezto
+	url = https://github.com/CupricWolf/prezto
+[submodule "yes"]
+	path = prezto
+	url = https://github.com/CupricWolf/prezto
