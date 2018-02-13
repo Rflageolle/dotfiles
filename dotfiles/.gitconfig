@@ -4,7 +4,7 @@
 	smudge = git-lfs smudge -- %f
 	process = git-lfs filter-process
 [user]
-	name = CupricWolf
+	name = MarcelloNicoletti
 	email = marcello.s.nicoletti@gmail.com
 [core]
 	excludesfile = /Users/Marco/.gitignore_global
