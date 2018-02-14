@@ -16,8 +16,10 @@ echo "...done"
 # then create symlinks
 while read -r -d '' file; do
     file=$( basename "$file" )
-    echo "Moving any existing dotfiles from ~ to $old_dotfiles_dir"
-    mv "$HOME/$file" "$old_dotfiles_dir"
+    if [[ -e "$HOME/$file" ]]; then
+        echo "Moving $file from ~ to $old_dotfiles_dir"
+        mv "$HOME/$file" "$old_dotfiles_dir"
+    fi
     echo "Creating symlink to $file in home directory."
     ln -s "$dotfiles_dir/$file" "$HOME/$file"
 done < <(find . -not \( -name "." -o -name ".DS_Store" \) -print0)
