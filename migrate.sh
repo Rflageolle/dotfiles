@@ -1,19 +1,45 @@
 #!/usr/bin/env bash
 
-# Migration tool for dotfiles.
-# Usage: "./migrate.sh .file" moves .file to dotfiles_dir and installs a
-#   symlink into ~/. If .file is already in dotfiles_dir, this removes it
-#   from dotfiles_dir and replaces it over the symlink.
+DIR=$(dirname "$0")
+FULL_RELATIVE_PATH=$(cd "$DIR" && pwd)
 
-source "$HOME/.dotfiles/definitions.sh"
+DEFINITION_FILE="$FULL_RELATIVE_PATH/definitions.sh"
+if [[ ! -e $DEFINITION_FILE ]]; then
+    echo "Definitions file missing"
+    exit 1
+fi
+
+source "$DEFINITION_FILE"
+
+if [[ $1 = "-h" || $1 = "--help" ]]; then
+    cat <<EOF
+Migrates files to or from the dotfiles repo. Makes a git commit after operation.
+For each file in <files...>:
+  If the file exists in $dotfiles_dir
+    it is moved to $HOME replacing the symlink;
+    if the file in $HOME is not a symlink it is skipped.
+  If the file does not exist in $dotfiles_dir
+    it is moved to $dotfiles_dir and a symlink
+    to it is placed in $HOME.
+
+Usage: $(basename "$0") [-h|--help] <files...>
+-h or --help: Show this message and exit. (Ignores <files...>)
+files...: a list of filenames to operate on
+EOF
+    exit 0
+fi
+
 declare -a Removed
 declare -a Added
 
-cd "$dotfiles_dir" || exit
+cd "$dotfiles_dir" || exit 1
 
 for file in "$@"; do
-    [[ $file =~ \..+ ]] || continue # Skip non-dot files TODO: Considder not
-    if [ -f "$file" ] || [ -d "$file" ]; then
+    if [[ -f $file || -d $file ]]; then
+        if [[ ! -L $HOME/$file ]]; then
+            echo "$HOME/$file is not a symlink. Skipping."
+            continue
+        fi
         echo "Removing symlink to $file from home directory."
         rm "$HOME/$file"
         echo "Moving $file back to home directory"
@@ -30,7 +56,6 @@ for file in "$@"; do
     fi
 done
 
-# git commit -m "Added (${Added[@]}) and Removed (${Removed[@]})"
 message="Migrate:"
 if [[ ${#Added[@]} -gt 0 ]]; then
     message="$message Added: ${Added[*]}"

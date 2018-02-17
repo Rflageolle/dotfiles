@@ -1,30 +1,42 @@
 #!/usr/bin/env bash
 
-source "$HOME/.dotfiles/definitions.sh"
+DIR=$(dirname "$0")
+FULL_RELATIVE_PATH=$(cd "$DIR" && pwd)
 
-# create dotfiles_old in homedir
+DEFINITION_FILE="$FULL_RELATIVE_PATH/definitions.sh"
+if [[ ! -e $DEFINITION_FILE ]]; then
+    echo "Definitions file missing"
+    exit 1
+fi
+
+source "$DEFINITION_FILE"
+
+if [[ $1 = "-h" || $1 = "--help" ]]; then
+    cat <<EOF
+Bootstraps a new device's dotfiles creating a symlink in $HOME
+for each file inside $dotfiles_dir
+while creating backups of old dotfiles in $old_dotfiles_dir.
+
+Usage: $(basename "$0") [-h|--help]
+-h or --help: Show this message and exit
+EOF
+    exit 0
+fi
+
 echo "Creating $old_dotfiles_dir for backup of any existing dotfiles in ~"
-mkdir -p $old_dotfiles_dir
+mkdir -p "$old_dotfiles_dir"
 echo "...done"
 
-# change to the dotfiles directory
 echo "Changing to the $dotfiles_dir directory"
-cd $dotfiles_dir || exit
+cd "$dotfiles_dir" || exit 1
 echo "...done"
 
-# move any existing dotfiles in homedir to dotfiles_old directory,
-# then create symlinks
 while read -r -d '' file; do
-    file=$( basename "$file" )
-    if [[ -e "$HOME/$file" ]]; then
+    file=$(basename "$file")
+    if [[ -e $HOME/$file ]]; then
         echo "Moving $file from ~ to $old_dotfiles_dir"
         mv "$HOME/$file" "$old_dotfiles_dir"
     fi
     echo "Creating symlink to $file in home directory."
     ln -s "$dotfiles_dir/$file" "$HOME/$file"
 done < <(find . -not \( -name "." -o -name ".DS_Store" \) -print0)
-
-
-# Now that this is a one time setup script
-# add brew.sh and source it. for brew installed programs
-# see https://github.com/mathiasbynens/dotfiles
