@@ -48,6 +48,7 @@ This function should only modify configuration layer settings."
      helm
      html
      java
+     javascript
      markdown
      ;; neotree
      org
