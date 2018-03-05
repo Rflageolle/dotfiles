@@ -63,8 +63,7 @@ This function should only modify configuration layer settings."
      ;;        shell-default-height 30
      ;;        shell-default-position 'bottom)
      (spell-checking :variables
-                     spell-checking-enable-by-default nil
-                     enable-flyspell-auto-completion t
+                     enable-flyspell-auto-completion nil
        )
      (syntax-checking :variables
                       :enabled-for javascript python ruby
