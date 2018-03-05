@@ -31,6 +31,10 @@ echo "Changing to the $dotfiles_dir directory"
 cd "$dotfiles_dir" || exit 1
 echo "...done"
 
+echo "Initializing git submodules if needed"
+git submodule update --init --recursive
+echo "...done"
+
 echo "Creating symlinks in $HOME"
 while read -r -d '' file; do
     file=$(basename "$file")
@@ -41,8 +45,4 @@ while read -r -d '' file; do
     echo "Creating symlink to $file in home directory."
     ln -s "$dotfiles_dir/$file" "$HOME/$file"
 done < <(find . -not \( -name "." -o -name ".DS_Store" \) -print0)
-echo "...done"
-
-echo "Initializing git submodules if needed"
-git submodule update --init --recursive
 echo "...done"
