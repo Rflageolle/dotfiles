@@ -10,9 +10,7 @@ PL_LEFT=$(printf "\uE0B3")
 TIME_STR=$(date +"%l:%M %p %Z")
 DATE_STR=$(date +"%a %b %d")
 
-
-echo "$(whoami)@$(hostname -s) \
-#[fg=colour6,bg=colour0]$PL_LEFT_BLACK\
+echo " #[fg=colour6,bg=colour0]$PL_LEFT_BLACK\
 #[fg=colour0,bg=colour6,bold] $DATE_STR \
 #[fg=colour3,bg=colour6]$PL_LEFT_BLACK\
 #[fg=colour0,bg=colour3,bold] $TIME_STR "
