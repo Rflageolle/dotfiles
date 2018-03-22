@@ -1,18 +1,19 @@
 #!/usr/bin/env bash
 
 # Powerline font glyhps
-PL_RIGHT_BLACK=$(printf "\uE0B0")
-PL_RIGHT=$(printf "\uE0B1")
-PL_LEFT_BLACK=$(printf "\uE0B2")
-PL_LEFT=$(printf "\uE0B3")
+PL_RIGHT_BLACK=$(printf "\\uE0B0")
+PL_RIGHT=$(printf "\\uE0B1")
+PL_LEFT_BLACK=$(printf "\\uE0B2")
+PL_LEFT=$(printf "\\uE0B3")
 
 # tmux values
-LENGTH=$(tmux display -p "#{status-left-length}")
-SESSION=$(tmux display -p "#S")
+STAT_LENGTH=$(tmux display -p "#{status-left-length}")
+STAT_LENGTH=$((STAT_LENGTH - 4)) # To allow for last divider
+TMUX_SESSION=$(tmux display -p "#S")
 
 # Status values
-status=""
-size=0
+tmux_status_left=""
+cur_size=0
 last_bg=""
 
 # the first section
@@ -21,20 +22,25 @@ function start_section () {
     # 2 Forground colour
     # 3 Background colour
     # 4 Extra formatting
-    status="#[fg=$2,bg=$3$4]$1"
+    tmux_status_left="#[fg=$2,bg=$3$4] $1"
     last_bg="$3"
-    size=$(($size + ${#1}))
+    cur_size=$((cur_size + ${#1}))
+
+    if [[ $cur_size -ge $STAT_LENGTH ]]; then
+        difference=$((STAT_LENGTH - cur_size))
+        tmux_status_left=${tmux_status_left:0:difference}
+        end_sections
+    fi
 }
 
 function end_sections () {
-    status="$status #[fg=$last_bg,bg=black]$PL_RIGHT_BLACK "
-    echo $status
+    tmux_status_left="$tmux_status_left #[fg=$last_bg,bg=black]$PL_RIGHT_BLACK "
+    echo "$tmux_status_left"
     exit 0
 }
 
-start_section "$SESSION" "colour0" "colour2" ",bold"
+start_section "$TMUX_SESSION" "colour0" "colour2" ",bold"
 
 end_sections
 
-echo "#[fg=colour0,bg=colour2,bold] $SESSION $PL_RIGHT #(whoami)@#(hostname -s) \
-#[fg=colour2,bg=colour0]$PL_RIGHT_BLACK "
+echo "#[fg=colour0,bg=colour2,bold] $TMUX_SESSION $PL_RIGHT #(whoami)@#(hostname -s) #[fg=colour2,bg=colour0]$PL_RIGHT_BLACK "
