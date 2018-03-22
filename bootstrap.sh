@@ -44,5 +44,5 @@ while read -r -d '' file; do
     fi
     echo "Creating symlink to $file in home directory."
     ln -s "$dotfiles_dir/$file" "$HOME/$file"
-done < <(find . -not \( -name "." -o -name ".DS_Store" \) -print0)
+done < <(find . -maxdepth 1 -not \( -name "." -o -name ".DS_Store" \) -print0)
 echo "...done"
