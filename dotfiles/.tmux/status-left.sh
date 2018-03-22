@@ -7,8 +7,9 @@ PL_LEFT_BLACK=$(printf "\\uE0B2")
 PL_LEFT=$(printf "\\uE0B3")
 
 # tmux values
-STAT_LENGTH=$(tmux display -p "#{status-left-length}")
-STAT_LENGTH=$((STAT_LENGTH - 4)) # To allow for last divider
+LEFT_STATUS_LENGTH=$(tmux display -p "#{status-left-length}")
+LEFT_STATUS_LENGTH=$((LEFT_STATUS_LENGTH - 4)) # To allow for last divider
+STATUS_BG=$(tmux display -p "#{status-bg}")
 TMUX_SESSION=$(tmux display -p "#S")
 
 # Status values
@@ -16,7 +17,6 @@ tmux_status_left=""
 cur_size=0
 last_bg=""
 
-# the first section
 function start_section () {
     # 1 Contents
     # 2 Forground colour
@@ -26,15 +26,19 @@ function start_section () {
     last_bg="$3"
     cur_size=$((cur_size + ${#1}))
 
-    if [[ $cur_size -ge $STAT_LENGTH ]]; then
-        difference=$((STAT_LENGTH - cur_size))
+    if [[ $cur_size -ge $LEFT_STATUS_LENGTH ]]; then
+        difference=$((LEFT_STATUS_LENGTH - cur_size))
         tmux_status_left=${tmux_status_left:0:difference}
         end_sections
     fi
 }
 
 function end_sections () {
-    tmux_status_left="$tmux_status_left #[fg=$last_bg,bg=black]$PL_RIGHT_BLACK "
+    if [[ $last_bg = "$STATUS_BG" ]]; then
+        tmux_status_left="$tmux_status_left $PL_RIGHT "
+    else
+        tmux_status_left="$tmux_status_left #[fg=$last_bg,bg=black]$PL_RIGHT_BLACK "
+    fi
     echo "$tmux_status_left"
     exit 0
 }
