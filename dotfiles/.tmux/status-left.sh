@@ -10,7 +10,7 @@ PL_LEFT=$(printf "\\uE0B3")
 LEFT_STATUS_LENGTH=$(tmux display -p "#{status-left-length}")
 LEFT_STATUS_LENGTH=$((LEFT_STATUS_LENGTH - 4)) # To allow for last divider
 STATUS_BG=$(tmux display -p "#{status-bg}")
-TMUX_SESSION=$(tmux display -p "#S")
+TMUX_SESSION="$1"
 
 # Status values
 tmux_status_left=""
