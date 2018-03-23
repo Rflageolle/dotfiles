@@ -31,6 +31,8 @@ function start_section () {
         tmux_status_left=${tmux_status_left:0:difference}
         end_sections
     fi
+
+    tmux_status_left="$tmux_status_left#[none]"
 }
 
 function end_sections () {
@@ -39,11 +41,39 @@ function end_sections () {
     else
         tmux_status_left="$tmux_status_left #[fg=$last_bg,bg=black]$PL_RIGHT_BLACK "
     fi
-    echo "$tmux_status_left"
+
+    echo "$tmux_status_left#[none]"
     exit 0
 }
 
-start_section "$TMUX_SESSION" "colour0" "colour2" ",bold"
+function middle_section () {
+    # 1 Contents
+    # 2 Forground colour
+    # 3 Background colour
+    # 4 Extra formatting
+
+    if [[ $last_bg = "$3" ]]; then
+        tmux_status_left="$tmux_status_left $PL_RIGHT"
+    else
+        tmux_status_left="$tmux_status_left #[fg=$last_bg,bg=$3]$PL_RIGHT_BLACK"
+    fi
+
+    tmux_status_left="$tmux_status_left#[fg=$2,bg=$3$4] $1"
+    last_bg="$3"
+    cur_size=$((cur_size + ${#1} + 3))
+
+    if [[ $cur_size -ge $LEFT_STATUS_LENGTH ]]; then
+        difference=$((LEFT_STATUS_LENGTH - cur_size))
+        tmux_status_left=${tmux_status_left:0:difference}
+        end_sections
+    fi
+
+    tmux_status_left="$tmux_status_left#[none]"
+}
+
+start_section "$TMUX_SESSION" "colour0" "colour7" ",bold"
+
+middle_section "$(whoami)@$(hostname -s)" "colour7" "colour0"
 
 end_sections
 
