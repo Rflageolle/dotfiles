@@ -39,7 +39,8 @@ function start_section () {
     cur_size=$((cur_size + ${#1}))
 
     if [[ $cur_size -ge $LEFT_STATUS_LENGTH ]]; then
-        end_of_status=$((${#tmux_status_left} - (cur_size - LEFT_STATUS_LENGTH)))
+        end_of_status=$((${#tmux_status_left} - \
+                                          (cur_size - LEFT_STATUS_LENGTH)))
         tmux_status_left="${tmux_status_left:0:end_of_status}"
         end_sections
     fi
@@ -69,7 +70,8 @@ function middle_section () {
     cur_size=$((cur_size + ${#1}))
 
     if [[ $cur_size -ge $LEFT_STATUS_LENGTH ]]; then
-        end_of_status=$((${#tmux_status_left} - (cur_size - LEFT_STATUS_LENGTH)))
+        end_of_status=$((${#tmux_status_left} - \
+                                          (cur_size - LEFT_STATUS_LENGTH)))
         tmux_status_left="${tmux_status_left:0:end_of_status}"
         end_sections
     fi
@@ -81,7 +83,8 @@ function end_sections () {
     if [[ $last_bg = "$STATUS_BG" ]]; then
         tmux_status_left="$tmux_status_left $PL_RIGHT "
     else
-        tmux_status_left="$tmux_status_left #[fg=$last_bg,bg=$STATUS_BG]$PL_RIGHT_BLACK "
+        tmux_status_left="$tmux_status_left \
+#[fg=$last_bg,bg=$STATUS_BG]$PL_RIGHT_BLACK "
     fi
 
     echo "$tmux_status_left#[none]"

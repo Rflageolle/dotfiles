@@ -25,17 +25,71 @@ max_width=$((CLIENT_WIDTH - LEFT_STATUS_LENGTH - 10))
 if [[ $RIGHT_STATUS_LENGTH -lt "$max_width" ]]; then
     max_width="$RIGHT_STATUS_LENGTH"
 fi
+if [[ $max_width -le 4 ]]; then
+    exit 0
+fi
 
 # Status values
 tmux_status_right=""
 cur_size=0
 last_bg=""
 
-# String parts
-TIME_STR=$(date +"%l:%M %p %Z")
-DATE_STR=$(date +"%a %b %d")
+# In this file the sections go right to left. There is no truncation outside the
+# starting section. If the section is too long it simply dissapears
+function start_section () {
+    # 1 Contents
+    # 2 Forground colour
+    # 3 Background colour
+    # 4 Extra formatting
 
-echo " #[fg=colour6,bg=colour0]$PL_LEFT_BLACK\
-#[fg=colour0,bg=colour6,bold] $DATE_STR \
-#[fg=colour3,bg=colour6]$PL_LEFT_BLACK\
-#[fg=colour0,bg=colour3,bold] $TIME_STR "
+    tmux_status_right="#[fg=$2,bg=$3$4] $1 "
+    last_bg="$3"
+    cur_size=$((cur_size + ${#1} + 3))
+
+    if [[ $cur_size -ge $max_width ]]; then
+        end_of_status=$((${#tmux_status_right} - (cur_size - max_width) - 2))
+        tmux_status_right="${tmux_status_right:0:end_of_status} "
+        end_sections
+    fi
+}
+
+function middle_section () {
+    # 1 Contents
+    # 2 Forground colour
+    # 3 Background colour
+    # 4 Extra formatting
+
+    cur_size=$((cur_size + ${#1} + 3))
+    if [[ $cur_size -ge $max_width ]]; then
+        end_sections
+    fi
+
+    if [[ $last_bg = "$3" ]]; then
+        tmux_status_right="$PL_LEFT#[none]$tmux_status_right"
+    else
+        tmux_status_right="#[fg=$last_bg,bg=$3]$PL_LEFT_BLACK\
+#[none]$tmux_status_right"
+    fi
+    tmux_status_right="#[fg=$2,bg=$3$4] $1 $tmux_status_right"
+
+    last_bg="$3"
+}
+
+function end_sections () {
+    if [[ $last_bg = "$STATUS_BG" ]]; then
+        tmux_status_right="$PL_LEFT#[none]$tmux_status_right"
+    else
+        tmux_status_right="#[fg=$last_bg,bg=$STATUS_BG]$PL_LEFT_BLACK\
+#[none]$tmux_status_right"
+    fi
+
+    echo " $tmux_status_right"
+
+    exit 0
+}
+
+start_section "$(date +"%l:%M %p %Z")" "colour0" "colour3" ",bold"
+
+middle_section "$(date +"%a %b %d")" "colour0" "colour2" ",bold"
+
+end_sections
