@@ -17,11 +17,15 @@ tmux_status_left=""
 cur_size=0
 last_bg=""
 
+# In this file the sections go left to right
+# When a section is too long it is truncated for length.
+# If it is tuncated to only the dividers the whole section disappears
 function start_section () {
     # 1 Contents
     # 2 Forground colour
     # 3 Background colour
     # 4 Extra formatting
+
     tmux_status_left="#[fg=$2,bg=$3$4] $1"
     last_bg="$3"
     cur_size=$((cur_size + ${#1}))
@@ -76,8 +80,8 @@ function end_sections () {
     exit 0
 }
 
-start_section "$TMUX_SESSION" "colour0" "colour7" ",bold"
+start_section "$TMUX_SESSION" "colour0" "colour9" ",bold"
 
-middle_section "$(whoami)@$(hostname -s)" "colour7" "colour0"
+middle_section "$(whoami)@$(hostname -s)" "colour0" "colour7"
 
 end_sections
