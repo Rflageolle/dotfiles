@@ -76,5 +76,3 @@ start_section "$TMUX_SESSION" "colour0" "colour7" ",bold"
 middle_section "$(whoami)@$(hostname -s)" "colour7" "colour0"
 
 end_sections
-
-echo "#[fg=colour0,bg=colour2,bold] $TMUX_SESSION $PL_RIGHT #(whoami)@#(hostname -s) #[fg=colour2,bg=colour0]$PL_RIGHT_BLACK "
