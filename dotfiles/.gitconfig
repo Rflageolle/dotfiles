@@ -4,8 +4,8 @@
 	smudge = git-lfs smudge -- %f
 	process = git-lfs filter-process
 [user]
-	name = MarcelloNicoletti
-	email = marcello.s.nicoletti@gmail.com
+	name = LSmith-Zenoscave
+	email =  lsmith@zenoscave.com
 [core]
-	excludesfile = /Users/Marco/.gitignore_global
+	excludesfile = /home/lsmith/.gitignore_global
   pager = less -F -X

@@ -12,24 +12,3 @@ function mkcd()
   cd $1
 }
 export -f mkcd
-
-# OS specific functions
-case $( uname -s ) in
-    "Darwin"|"darwin" )
-        # macOS
-        function school()
-        {
-          cs "$HOME/Documents/School/Spring_18/$1"*
-        }
-        export -f school
-
-        function dman()
-        {
-          open dash://manpages:"$*"
-        }
-        export -f dman
-        ;;
-    * )
-        # Put other OS function here
-        ;;
-esac
